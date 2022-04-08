@@ -52,7 +52,7 @@ let shortenUrl = async function (req, res) {
         const cahcedUrl= await GET_ASYNC(`${longUrl}`)
         const newCahcedUrl=JSON.parse(cahcedUrl)
         if(newCahcedUrl){
-        return res.status(200).send({ status: "true", data: newCahcedUrl })
+        return res.status(201).send({ status: true, data: newCahcedUrl })
        }
         //checkurl alredy exist
         const ExistUrl = await  urlModel.findOne({longUrl:longUrl})
@@ -95,7 +95,7 @@ const redirectUrl = async function (req, res) {
       await SET_ASYNC(`${urlCode}`, JSON.stringify(url.longUrl))
       return res.status(302).redirect(url.longUrl)
      }
-     return res.status(400).send({status: false, msg: `No URL found`})
+     return res.status(404).send({status: false, msg: `No URL found`})
  }
   catch(error) {
       return res.status(500).send({status: false, error: error.message})
